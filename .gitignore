@@ -41,4 +41,5 @@ Thumbs.db
 .nx/cache
 .nx/workspace-data
 
-.github
+.github/workflows
+.env
