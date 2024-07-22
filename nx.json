@@ -48,5 +48,5 @@
       "preVersionCommand": "npx nx run-many -t build"
     }
   },
-  "nxCloudAccessToken": "ZTlkMDA3MzAtZjIxYi00Y2I3LThmNDUtZjc1ZTI2YTBhNGZhfHJlYWQtd3JpdGU="
+  "nxCloudAccessToken": "${NX_CLOUD_ACCESS_TOKEN}"
 }

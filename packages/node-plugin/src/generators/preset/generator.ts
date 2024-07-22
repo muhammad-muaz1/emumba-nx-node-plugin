@@ -25,7 +25,7 @@ export async function presetGenerator(
 
   updateJson(tree, 'package.json', (json) => {
     json.scripts = json.scripts || {};
-    json.scripts.start = 'nodemon --exec ts-node src/index.ts';
+    json.scripts.start = 'nodemon --exec ts-node index.ts';
     return json;
   });
 
