@@ -3,15 +3,6 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/create-emumba-node-app/bin",
   "projectType": "library",
-  "release": {
-    "version": {
-      "generatorOptions": {
-        "packageRoot": "dist/{projectRoot}",
-        "currentVersionResolver": "git-tag"
-      }
-    }
-  },
-  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -20,24 +11,39 @@
         "outputPath": "dist/packages/create-emumba-node-app",
         "main": "packages/create-emumba-node-app/bin/index.ts",
         "tsConfig": "packages/create-emumba-node-app/tsconfig.lib.json",
-        "assets": ["packages/create-emumba-node-app/*.md"]
+        "assets": ["packages/create-emumba-node-app/*.md"],
+        "updateBuildableProjectDepsInPackageJson": false
       }
     },
-    "nx-release-publish": {
-      "options": {
-        "packageRoot": "dist/{projectRoot}"
-      }
+    "publish": {
+      "command": "node tools/scripts/publish.mjs create-emumba-node-app {args.ver} {args.tag}",
+      "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/eslint:lint"
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/create-emumba-node-app/**/*.ts",
+          "packages/create-emumba-node-app/package.json"
+        ]
+      }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "packages/create-emumba-node-app/jest.config.ts"
+        "jestConfig": "packages/create-emumba-node-app/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     }
   },
+  "tags": [],
   "implicitDependencies": ["node-plugin"]
 }

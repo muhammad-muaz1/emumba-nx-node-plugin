@@ -1,1 +1,26 @@
-const variable = "<%= name %>";
+import express from 'express';
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+console.log(process.env.MONGO_URI)
+
+mongoose.connect(process.env.MONGO_URI)
+.then(() => {
+  console.log('Connected to MongoDB');
+})
+.catch((err: any) => {
+  console.error('Failed to connect to MongoDB', err);
+});
+
+app.get('/', (req: express.Request, res: express.Response) => {
+  res.send('Hello, World!');
+});
+
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
