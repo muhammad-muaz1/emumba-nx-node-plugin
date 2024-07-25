@@ -1,0 +1,11 @@
+import { Request, Response } from 'express';
+import { getUserService } from '../services/user.service';
+
+export const getUser = async (req: Request, res: Response) => {
+  try {
+    const users = await getUserService();
+    res.json(users);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
