@@ -1,13 +1,14 @@
-import express from 'express';
-const mongoose = require('mongoose');
+import * as fs from 'fs';
+import * as path from 'path';
+const cors = require('cors');
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+import express,{Request, Response, Application} from 'express';
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-console.log(process.env.MONGO_URI)
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
@@ -17,7 +18,23 @@ mongoose.connect(process.env.MONGO_URI)
   console.error('Failed to connect to MongoDB', err);
 });
 
-app.get('/', (req: express.Request, res: express.Response) => {
+app.use(cors());
+
+// Function to dynamically load routes
+const loadRoutes = (app: Application) => {
+  const routesPath = path.join(__dirname, 'routes');
+  fs.readdirSync(routesPath).forEach((file) => {
+    if (file.endsWith('.routes.ts')) {
+      const route = require(path.join(routesPath, file));
+      app.use('/api', route.default); //Set prefix for routes
+    }
+  });
+};
+
+// Load routes
+loadRoutes(app);
+
+app.get('/', (req: Request, res: Response) => {
   res.send('Hello, World!');
 });
 
