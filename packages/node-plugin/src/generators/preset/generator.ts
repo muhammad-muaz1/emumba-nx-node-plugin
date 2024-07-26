@@ -37,6 +37,7 @@ export async function presetGenerator(
       mongoose: 'latest',
       dotenv: 'latest',
       cors: 'latest',
+      ioredis: 'latest',
     },
     {
       '@types/node': 'latest',

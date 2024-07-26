@@ -1,5 +1,6 @@
-import mongoose from 'mongoose';
 import app from './app';
+import redis from './redis';
+import mongoose from 'mongoose';
 
 const port = process.env.PORT || 3000;
 const dbUrl = process.env.MONGO_URI || 'mongodb://localhost:27017/test';
@@ -7,6 +8,15 @@ const dbUrl = process.env.MONGO_URI || 'mongodb://localhost:27017/test';
 mongoose.connect(dbUrl)
   .then(() => {
     console.log('Connected to MongoDB');
+
+    redis.set('test', 'Hello, Redis!', (err, reply) => {
+      if (err) {
+        console.error('Failed to set value in Redis', err);
+      } else {
+        console.log('Redis is up and running:', reply);
+      }
+    });
+
     app.listen(port, () => {
       console.log(`Server is running at http://localhost:${port}`);
     });
