@@ -26,6 +26,7 @@ export async function presetGenerator(
   updateJson(tree, 'package.json', (json) => {
     json.scripts = json.scripts || {};
     json.scripts.start = 'nodemon --exec ts-node server.ts';
+    json.scripts.test = 'jest';
     json.scripts.lint = 'eslint . --ext .ts';
     return json;
   });
@@ -43,6 +44,10 @@ export async function presetGenerator(
       '@types/node': 'latest',
       '@types/express': 'latest',
       '@types/cors': 'latest',
+      "@types/jest": "latest",
+      "@types/mocha": "latest",
+      "jest": "latest",
+      "ts-jest": "latest",
       'ts-node': 'latest',
       'typescript': 'latest',
       'nodemon': 'latest'
