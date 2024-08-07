@@ -12,6 +12,13 @@
         "index": 0
       },
       "x-prompt": "What name would you like to use?"
+    },
+    "userAuth": {
+      "type": "string",
+      "description": "",
+      "default": "none",
+      "enum": ["session-based", "token-based", "none"],
+      "x-prompt": "Which user authentication do you want to use? (session-based/token-based/none)"
     }
   },
   "required": ["name"]

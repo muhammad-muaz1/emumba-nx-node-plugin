@@ -3,14 +3,41 @@ import * as path from 'path';
 import * as fs from 'fs';
 const cors = require('cors');
 const dotenv = require('dotenv');
+<% if (userAuth === 'token-based') { %>
+import jwt from 'jsonwebtoken';
+<% } %>
+<% if (userAuth === 'session-based') { %>
+import session from 'express-session';
+<% } %>
 
 dotenv.config();
 
 const app: Application = express();
 
+<% if (userAuth === 'session-based') { %>
+declare module 'express-session' {
+  interface SessionData {
+    user: {
+      _id: string;
+      name: string;
+      email: string;
+    };
+  }
+}
+<% } %>
+
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+<% if (userAuth === 'session-based') { %>
+app.use(session({
+  secret: process.env.SESSION_SECRET as string,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+<% } %>
 
 // Function to dynamically load routes
 const loadRoutes = (app: Application) => {
