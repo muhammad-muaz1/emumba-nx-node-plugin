@@ -31,6 +31,18 @@ export async function presetGenerator(
     return json;
   });
 
+  if(options.userAuth === "token-based" && tree.exists(`${projectRoot}/types/express-session`)){
+    tree.delete(`${projectRoot}/types/express-session`);
+  }
+
+  if(options.architecture === "micro-services" && tree.exists(`${projectRoot}/src`)){
+    tree.delete(`${projectRoot}/src`);
+  }
+
+  if(options.architecture === "monolithic" && tree.exists(`${projectRoot}/apps`)){
+    tree.delete(`${projectRoot}/apps`);
+  }
+
   return addDependenciesToPackageJson(
     tree,
     {

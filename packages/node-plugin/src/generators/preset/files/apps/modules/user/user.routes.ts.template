@@ -1,0 +1,11 @@
+import { Router } from 'express';
+import { authenticate } from './auth.middleware';
+import { getUser, login, register } from './user.controller';
+
+const router = Router();
+
+router.get('/users', authenticate, getUser);
+router.post('/login', login);
+router.post('/register', register);
+
+export default router;

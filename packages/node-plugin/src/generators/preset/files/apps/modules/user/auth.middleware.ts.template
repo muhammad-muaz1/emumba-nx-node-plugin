@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 <% if (userAuth === 'token-based') { %>
-import User from '../models/user.model';
+import User from './user.model';
 import jwt from 'jsonwebtoken';
 <% } %>
 

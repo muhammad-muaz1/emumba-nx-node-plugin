@@ -19,6 +19,13 @@
       "default": "none",
       "enum": ["session-based", "token-based", "none"],
       "x-prompt": "Which user authentication do you want to use? (session-based/token-based/none)"
+    },
+    "architecture": {
+      "type": "string",
+      "description": "",
+      "default": "monolithic",
+      "enum": ["monolithic", "micro-services"],
+      "x-prompt": "Which architectural approach do you want to use?"
     }
   },
   "required": ["name"]
