@@ -32,6 +32,19 @@ async function main() {
     } else {
       userAuth = userAuthArg;
     }
+
+    let architecture = process.argv[3];
+    if (!architecture) {
+      architecture = (
+        await prompt<{ architecture: string }>({
+          type: 'select',
+          name: 'architecture',
+          message: 'Which architectural approach do you want to use?',
+          choices: ['monolithic', 'micro-services'],
+        })
+      ).architecture;
+    }
+  
   
     console.log(`Creating the workspace: ${name}`);
   
@@ -44,7 +57,8 @@ async function main() {
       name,
       nxCloud: 'skip',
       packageManager: 'npm',
-      userAuth
+      userAuth,
+      architecture,
     });
   
     console.log(`Successfully created the workspace: ${directory}.`);
