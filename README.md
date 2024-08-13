@@ -72,9 +72,17 @@ The Emumba Plugin allows you to configure various aspects of your project, inclu
 
 - **Authentication:** Choose between token based or session based authentication.
 
-- **Framework:** Express framework.
+- **Framework:** Express framework for building your application.
 
-- **Custom Routes:** Routes setup for whole project tree.
+- **Dynamic Routes:** Dynamic route setup for the entire project tree.
+
+- **Testing:** Integrated Jest setup for unit and integration testing.
+
+- **Caching:** Redis integration for caching and session management.
+
+- **CORS:** Configurable Cross-Origin Resource Sharing (CORS) to manage access control.
+
+- **Containerization:** Docker setup for easy deployment and consistent development environments.
 
 You can customize these options during project setup, and the Emumba Plugin will generate a project that adheres to your choices.
 
@@ -84,7 +92,7 @@ Here's an overview of the project's directory structure:
 
 ```
 ├── packages
-│   ├── emumba-plugin
+│   ├── node-plugin
 │   │   ├── src
 │   │   │   ├── generators
 │   │   │   │   ├── preset
