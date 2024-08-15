@@ -1,9 +1,10 @@
-import bcrypt from 'bcrypt';
-import User from '../models/user.model';
 import { Request, Response } from 'express';
-import { getUserService } from '../services/user.service';
 <% if (userAuth === 'token-based') { %>
-import jwt from 'jsonwebtoken';
+import { getUserService, registerUserService, loginUserService, generateToken } from '../services/user.service';
+<% } else if (userAuth === 'session-based') { %>
+import { getUserService, registerUserService, loginUserService } from '../services/user.service';
+<% } else { %>
+import { getUserService, registerUserService } from '../services/user.service';
 <% } %>
 
 export const getUser = async (req: Request, res: Response) => {
@@ -18,29 +19,22 @@ export const getUser = async (req: Request, res: Response) => {
 export const register = async (req: Request, res: Response) => {
   try {
     const { name, email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword });
-    await user.save();
+    await registerUserService(name, email, password);
     res.status(201).send('User registered successfully');
   } catch (error) {
     res.status(500).send(error);
   }
 };
 
+<% if (userAuth !== 'none') { %>
+
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(400).send('Invalid email or password');
-    }
+    const user = await loginUserService(email, password);
 
     <% if (userAuth === 'token-based') { %>
-    const token = jwt.sign(
-      { _id: user._id, name: user.name, email: user.email },
-      process.env.JWT_SECRET as string,
-      { expiresIn: '1h' }
-    );
+    const token = generateToken(user);
     res.send({ token });
     <% } else { %>
     req.session.user = {
@@ -54,3 +48,5 @@ export const login = async (req: Request, res: Response) => {
     res.status(500).send(error);
   }
 };
+
+<% } %>

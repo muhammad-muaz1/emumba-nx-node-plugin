@@ -1,11 +1,20 @@
 import { Router } from 'express';
+<% if (userAuth !== 'none') { %>
 import { authenticate } from '../middlewares/auth.middleware';
 import { getUser, login, register } from '../controllers/user.controller';
+<% } else { %>
+import { getUser, register } from '../controllers/user.controller';
+<% } %>
 
 const router = Router();
 
+<% if (userAuth !== 'none') { %>
 router.get('/users', authenticate, getUser);
 router.post('/login', login);
 router.post('/register', register);
+<% } else { %>
+router.get('/users', getUser);
+router.post('/register', register);
+<% } %>
 
 export default router;
