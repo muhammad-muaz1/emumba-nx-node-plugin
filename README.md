@@ -66,7 +66,7 @@ npx @emumbaorg/nx-project-setup@latest my-app
 
 ## Configuration
 
-The Emumba Plugin allows you to configure various aspects of your project, including:
+The Emumba Node Plugin allows you to configure various aspects of your project, including:
 
 - **Type of Application:** Choose between monolithic or micro-service.
 
@@ -84,7 +84,7 @@ The Emumba Plugin allows you to configure various aspects of your project, inclu
 
 - **Containerization:** Docker setup for easy deployment and consistent development environments.
 
-You can customize these options during project setup, and the Emumba Plugin will generate a project that adheres to your choices.
+You can customize these options during project setup, and the Emumba Node Plugin will generate a project that adheres to your choices.
 
 ## Understanding the File Structure
 
@@ -115,7 +115,7 @@ Here's an overview of the project's directory structure:
 │   │   │   │   │   └── jest.config.ts
 │   │   │   │   │   └── redis.ts
 │   │   │   │   │   └── tsconfig.json
-│   └── create-emumba-node-setup
+│   └── create-emumba-node-app
 │       ├── bin
 │       │   └── index.ts
 ├── project.json
@@ -123,20 +123,23 @@ Here's an overview of the project's directory structure:
 └── tsconfig.base.json
 ```
 
+In preset files folder you can see we have two main folders one is app/modules which is following micro-service architecture and second is
+src which is following monolithic architecture.
+
 ## Key Components
 
-### `emumba-project-setup`
+### `create-emumba-node-app`
 
 This directory contains the core logic for generating boilerplates based on user preferences. It includes the following elements:
 
 - `bin/index.ts`: This is the entry point of the CLI tool. It utilizes the `enquirer` npm package to prompt users and collect their choices regarding project configuration.
 
-### `emumba-plugin/src/generators/preset`
+### `node-plugin/src/generators/preset`
 
 This directory encompasses the code responsible for generating project files and adding dependencies. The central file in this directory is:
 
 - `generator.ts`: This file handles the appropriate file generation and dependency management based on the user's prompt selections.
 
-### `emumba-plugin/src/generators/preset/files`
+### `node-plugin/src/generators/preset/files`
 
 This directory holds templates for the components that will be generated/added based on the user's selections. It includes subdirectories for various components, such as Jest Libraries (e.g., Jest and mocha in `/tests/example.test.ts`) and other options.
